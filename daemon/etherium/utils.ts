@@ -5,7 +5,7 @@ import { EtheriumBlock } from "./types";
 export const FAILED_REQUEST = "NOTOK";
 
 export const getEtheriumBlock = async (tag: number): Promise<EtheriumBlock> => {
-  return getRequest(config.etheriumApiUrl.replace("%1", tag.toString()));
+  return getRequest(config.etheriumApiUrl.replace("%1", tag.toString(16)));
 };
 
 export const getLastEtheriumBlock = async (): Promise<EtheriumBlock> => {
@@ -14,4 +14,8 @@ export const getLastEtheriumBlock = async (): Promise<EtheriumBlock> => {
 
 export const getRequest = async (url: string) => {
   return (await fetch(url)).json();
+};
+
+export const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };

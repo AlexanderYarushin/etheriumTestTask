@@ -1,9 +1,9 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import { config } from "../../config";
-import { Model, ModelCtor } from "sequelize/types/model";
 
 export const getSequelize = (): Sequelize => {
   const pgConfig = {
+    logging: false,
     define: {
       updatedAt: "createdAt",
     },
