@@ -5,7 +5,7 @@ import {
   sleep,
 } from "./utils";
 import { EtheriumBlock, TransactionInfo } from "./types";
-import { getSequelize } from "./sequelize";
+import { getSequelize } from "../../../db/sequelize";
 import { DataTypes } from "sequelize";
 import { config } from "../../../config";
 
