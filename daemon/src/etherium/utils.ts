@@ -1,4 +1,4 @@
-import { config } from "../../config";
+import { config } from "../../../config";
 import fetch from "node-fetch";
 import { EtheriumBlock } from "./types";
 

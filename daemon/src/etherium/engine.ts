@@ -7,7 +7,7 @@ import {
 import { EtheriumBlock, TransactionInfo } from "./types";
 import { getSequelize } from "./sequelize";
 import { DataTypes } from "sequelize";
-import { config } from "../../config";
+import { config } from "../../../config";
 
 let currentEtheriumBlockTag = 0xe32492;
 let lastEtheriumBlockTag = 0;
