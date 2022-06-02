@@ -11,7 +11,7 @@ export const config = {
     password: "root",
     host: "localhost",
   },
-  offsetFromLastBlock: 50,
+  offsetFromLastBlock: 20,
 
   //Api
 

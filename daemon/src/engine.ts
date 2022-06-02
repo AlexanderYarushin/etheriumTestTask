@@ -2,79 +2,16 @@ import {
   FAILED_REQUEST,
   getEtheriumBlock,
   getLastEtheriumBlock,
-  sleep,
 } from "../../etherium/getBlock";
 import { EtheriumBlock, EtheriumTransaction } from "../../etherium/types";
-import { getSequelize } from "./db/sequelize";
-import { DataTypes } from "sequelize";
+import { getSequelize, getTransactionsModelDefine } from "./db/sequelize";
 import { config } from "../../config";
 
 let currentEtheriumBlockTag = 0;
 let lastEtheriumBlockTag = 0;
 
 const sequelize = getSequelize();
-const blocksTable = sequelize.define("transactions", {
-  block_hash: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  block_number: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  from_addr: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  gas: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  gas_price: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  hash: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  input: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  nonce: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  to_addr: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  transaction_index: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  value: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  type: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  v: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  r: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  s: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
+const blocksTable = getTransactionsModelDefine(sequelize);
 
 export const start = async () => {
   currentEtheriumBlockTag =
