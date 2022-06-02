@@ -10,7 +10,8 @@
 
 1. Развернуть СУБД PostgreSQL, я делал в докере, в директории dockerDB лежит скрипт:
     ```sh
-    sh dockerDB/createDb.sh
+   cd dockerDB
+    sh ./createDb.sh
     ```
    Он развернет docker контейнер с базой и создаст в ней таблицу
 2. Устанавливаем зависимости: 
