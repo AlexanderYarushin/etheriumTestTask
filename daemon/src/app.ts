@@ -1,4 +1,4 @@
-import { start } from "./etherium/engine";
+import { start } from "./engine";
 
 (async () => {
   await start();

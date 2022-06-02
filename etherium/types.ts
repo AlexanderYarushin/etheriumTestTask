@@ -27,7 +27,7 @@ export type EtheriumBlock = {
   };
 };
 
-type EtheriumTransaction = {
+export type EtheriumTransaction = {
   blockHash: string;
   blockNumber: string;
   from: string;

@@ -3,13 +3,13 @@ import {
   getEtheriumBlock,
   getLastEtheriumBlock,
   sleep,
-} from "./utils";
-import { EtheriumBlock, TransactionInfo } from "./types";
-import { getSequelize } from "../../../db/sequelize";
+} from "../../etherium/utils";
+import { EtheriumBlock, TransactionInfo } from "../../etherium/types";
+import { getSequelize } from "./db/sequelize";
 import { DataTypes } from "sequelize";
-import { config } from "../../../config";
+import { config } from "../../config";
 
-let currentEtheriumBlockTag = 0xe32492;
+let currentEtheriumBlockTag = 0;
 let lastEtheriumBlockTag = 0;
 
 const sequelize = getSequelize();
@@ -25,14 +25,19 @@ const blocksTable = sequelize.define("blocks", {
 });
 
 export const start = async () => {
-  setInterval(updateLastEtheriumBlock, config.updateLastEtheriumBlockInterval);
+  currentEtheriumBlockTag =
+    parseInt((await getLastEtheriumBlock()).result) -
+    config.offsetFromLastBlock;
+
+  await updateLastEtheriumBlock();
+
   await fillTable();
 };
 
 const fillTable = async () => {
   while (true) {
     if (currentEtheriumBlockTag > lastEtheriumBlockTag) {
-      await sleep(100);
+      await updateLastEtheriumBlock();
       continue;
     }
 
@@ -40,18 +45,18 @@ const fillTable = async () => {
       currentEtheriumBlockTag
     );
 
-    if (block.message !== FAILED_REQUEST && block.message !== null) {
+    if (block.message !== FAILED_REQUEST) {
       const transactions = block.result.transactions;
 
       for (const transaction of transactions) {
-        const _transaction: TransactionInfo = {
+        const partTransaction: TransactionInfo = {
           tag: transaction.blockNumber,
           value: parseInt(transaction.value),
         };
 
-        logTransactionInfo(_transaction);
+        logTransactionInfo(partTransaction);
 
-        await addNewBlockDB(_transaction);
+        await addNewBlockDB(partTransaction);
       }
 
       currentEtheriumBlockTag++;
@@ -60,8 +65,13 @@ const fillTable = async () => {
 };
 
 const logTransactionInfo = (info: TransactionInfo) => {
+  const online =
+    Math.abs(lastEtheriumBlockTag - currentEtheriumBlockTag) <= 1
+      ? "(online)"
+      : "";
+
   console.log(
-    "Add new transaction: Tag: " + info.tag + ", Value: " + info.value
+    `Add new transaction${online}: Tag: ${info.tag}, Value: ${info.value}`
   );
 };
 

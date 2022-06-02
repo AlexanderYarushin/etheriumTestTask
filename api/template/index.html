@@ -1,0 +1,38 @@
+<input type = "button" id = "btn" value = "Get max abs value" onclick="getData()">
+<div class = "label" id = "tag">Address: <b id = "addressVal">0</b></div>
+<div class = "label" id = "value">Amount of changes: <b id = "valueVal">0</b> Eth</div>
+<img src="loading.gif" alt="" id = "loading" >
+<script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function getData(){
+        $("#loading").css("visibility", "visible");
+        $.ajax({
+            url: '/getData',
+            method: 'POST',
+            success: function(data){
+                $("#loading").css("visibility", "hidden");
+                $("#addressVal").text(data.address);
+                $("#valueVal").text(data.value);
+            }
+        })
+    }
+</script>
+
+<style>
+    #btn{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .label{
+        font-size: 20px;
+    }
+
+    #loading{
+        position: absolute;
+        left: 200px;
+        width: 40px;
+        top: 2px;
+        visibility: hidden;
+    }
+</style>
