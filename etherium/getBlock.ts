@@ -4,7 +4,7 @@ import { EtheriumBlock } from "./types";
 
 export const FAILED_REQUEST = "NOTOK";
 
-export const getEtheriumBlock = async (tag: number) => {
+export const getEtheriumBlock = async (tag: number): Promise<EtheriumBlock> => {
   return getRequest(config.etheriumApiUrl.replace("%1", tag.toString(16)));
 };
 
