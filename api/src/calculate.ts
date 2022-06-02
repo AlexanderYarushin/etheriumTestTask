@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import {
+  FAILED_REQUEST,
   getEtheriumBlock,
   getLastEtheriumBlock,
 } from "../../etherium/getBlock";
@@ -20,21 +21,23 @@ export const getAddressValueMap = async () => {
   const result: EtheriumBlock[] = await Promise.all(promises);
 
   for (let i = 0; i < result.length; ++i) {
-    result[i].result.transactions.forEach((transaction) => {
-      const value = parseFloat(Web3.utils.fromWei(transaction.value));
+    if(result[i].message !== FAILED_REQUEST){
+      result[i].result.transactions.forEach((transaction) => {
+        const value = parseFloat(Web3.utils.fromWei(transaction.value));
 
-      if (addresses.get(transaction.from) === undefined) {
-        addresses.set(transaction.from, 0);
-      }
+        if (addresses.get(transaction.from) === undefined) {
+          addresses.set(transaction.from, 0);
+        }
 
-      addresses.set(transaction.from, addresses.get(transaction.from) - value);
+        addresses.set(transaction.from, addresses.get(transaction.from) - value);
 
-      if (addresses.get(transaction.to) === undefined) {
-        addresses.set(transaction.to, 0);
-      }
+        if (addresses.get(transaction.to) === undefined) {
+          addresses.set(transaction.to, 0);
+        }
 
-      addresses.set(transaction.to, addresses.get(transaction.to) + value);
-    });
+        addresses.set(transaction.to, addresses.get(transaction.to) + value);
+      });
+    }
   }
 
   return addresses;
