@@ -34,5 +34,5 @@ app.post("/getData", async (req, res) => {
 });
 
 app.listen(config.apiPort, () => {
-  console.log("Application listening on port 3333!");
+  console.log("Server start, port: " + config.apiPort);
 });

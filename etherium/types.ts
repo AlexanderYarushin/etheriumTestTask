@@ -44,8 +44,3 @@ export type EtheriumTransaction = {
   r: string;
   s: string;
 };
-
-export type TransactionInfo = {
-  tag: string;
-  value: number;
-};

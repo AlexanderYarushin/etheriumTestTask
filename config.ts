@@ -6,7 +6,7 @@ export const config = {
     "https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apiKey=F74NG73VMDVYF8R24T3TIUU4NP174SEWGH",
   updateLastEtheriumBlockInterval: 1000, //ms
   postgres: {
-    database: "etherium",
+    database: "postgres",
     username: "postgres",
     password: "root",
     host: "localhost",
@@ -16,4 +16,5 @@ export const config = {
   //Api
 
   apiPort: 3000,
+  calcBlockCount: 100,
 };

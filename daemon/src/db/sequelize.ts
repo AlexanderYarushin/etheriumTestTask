@@ -5,7 +5,9 @@ export const getSequelize = (): Sequelize => {
   const pgConfig = {
     logging: false,
     define: {
-      updatedAt: "createdAt",
+      createdAt: "createdat",
+      updatedAt: "createdat",
+      timestamps: true,
     },
   };
 

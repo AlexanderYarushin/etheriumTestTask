@@ -1,10 +1,14 @@
-import { getEtheriumBlock, getLastEtheriumBlock } from "../../etherium/utils";
 import Web3 from "web3";
+import {
+  getEtheriumBlock,
+  getLastEtheriumBlock,
+} from "../../etherium/getBlock";
 import { EtheriumBlock } from "../../etherium/types";
+import { config } from "../../config";
 
 export const getAddressValueMap = async () => {
   const lastBlockTag = parseInt((await getLastEtheriumBlock()).result);
-  let currentBlockTag = lastBlockTag - 100;
+  let currentBlockTag = lastBlockTag - config.calcBlockCount;
 
   let addresses = new Map<string, number>();
 
@@ -29,7 +33,7 @@ export const getAddressValueMap = async () => {
         addresses.set(transaction.to, 0);
       }
 
-      addresses.set(transaction.to, addresses.get(transaction.to) - value);
+      addresses.set(transaction.to, addresses.get(transaction.to) + value);
     });
   }
 
