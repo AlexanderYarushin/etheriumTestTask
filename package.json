@@ -2,7 +2,6 @@
   "name": "ethereum_test_task",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "startDaemon": "tsc && node dist/daemon/src/app.js",
     "startApi": "tsc && node dist/api/src/app.js"
